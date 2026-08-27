@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as HistoryRouteImport } from './routes/history'
 import { Route as ApiPublicShortenRouteImport } from './routes/api/public/shorten'
@@ -18,6 +19,11 @@ import { Route as ApiPublicUrlsRouteImport } from './routes/api/public/urls'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -43,6 +49,7 @@ const ApiPublicUrlsRoute = ApiPublicUrlsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
   '/dashboard': typeof DashboardRoute
   '/history': typeof HistoryRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
@@ -66,13 +75,24 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/dashboard' | '/history' | '/api/public/shorten' | '/api/public/urls'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/history'
+    | '/api/public/shorten'
+    | '/api/public/urls'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/dashboard' | '/history' | '/api/public/shorten' | '/api/public/urls'
+    | '/'
+    | '/about'
+    | '/dashboard'
+    | '/history'
+    | '/api/public/shorten'
+    | '/api/public/urls'
   id:
     | '__root__'
     | '/'
+    | '/about'
     | '/dashboard'
     | '/history'
     | '/api/public/shorten'
@@ -81,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
   DashboardRoute: typeof DashboardRoute
   HistoryRoute: typeof HistoryRoute
   ApiPublicShortenRoute: typeof ApiPublicShortenRoute
@@ -94,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -129,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
   DashboardRoute: DashboardRoute,
   HistoryRoute: HistoryRoute,
   ApiPublicShortenRoute: ApiPublicShortenRoute,
