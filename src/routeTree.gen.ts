@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicShortenRouteImport } from './routes/api/public/shorten'
+import { Route as ApiPublicUrlsRouteImport } from './routes/api/public/urls'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +23,40 @@ const ApiPublicShortenRoute = ApiPublicShortenRouteImport.update({
   path: '/api/public/shorten',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicUrlsRoute = ApiPublicUrlsRouteImport.update({
+  id: '/api/public/urls',
+  path: '/api/public/urls',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/shorten'
+  fullPaths: '/' | '/api/public/shorten' | '/api/public/urls'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/shorten'
-  id: '__root__' | '/' | '/api/public/shorten'
+  to: '/' | '/api/public/shorten' | '/api/public/urls'
+  id: '__root__' | '/' | '/api/public/shorten' | '/api/public/urls'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiPublicShortenRoute: typeof ApiPublicShortenRoute
+  ApiPublicUrlsRoute: typeof ApiPublicUrlsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +75,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicShortenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/urls': {
+      id: '/api/public/urls'
+      path: '/api/public/urls'
+      fullPath: '/api/public/urls'
+      preLoaderRoute: typeof ApiPublicUrlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiPublicShortenRoute: ApiPublicShortenRoute,
+  ApiPublicUrlsRoute: ApiPublicUrlsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
