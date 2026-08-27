@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShortCodeRouteImport } from './routes/$shortCode'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as ApiPublicShortenRouteImport } from './routes/api/public/shorten'
+import { Route as ApiPublicUrlsRouteImport } from './routes/api/public/urls'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShortCodeRoute = ShortCodeRouteImport.update({
+  id: '/$shortCode',
+  path: '/$shortCode',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicShortenRoute = ApiPublicShortenRouteImport.update({
+  id: '/api/public/shorten',
+  path: '/api/public/shorten',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicUrlsRoute = ApiPublicUrlsRouteImport.update({
+  id: '/api/public/urls',
+  path: '/api/public/urls',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$shortCode': typeof ShortCodeRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$shortCode': typeof ShortCodeRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$shortCode': typeof ShortCodeRoute
+  '/about': typeof AboutRoute
+  '/dashboard': typeof DashboardRoute
+  '/history': typeof HistoryRoute
+  '/api/public/shorten': typeof ApiPublicShortenRoute
+  '/api/public/urls': typeof ApiPublicUrlsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/$shortCode'
+    | '/about'
+    | '/dashboard'
+    | '/history'
+    | '/api/public/shorten'
+    | '/api/public/urls'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/$shortCode'
+    | '/about'
+    | '/dashboard'
+    | '/history'
+    | '/api/public/shorten'
+    | '/api/public/urls'
+  id:
+    | '__root__'
+    | '/'
+    | '/$shortCode'
+    | '/about'
+    | '/dashboard'
+    | '/history'
+    | '/api/public/shorten'
+    | '/api/public/urls'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShortCodeRoute: typeof ShortCodeRoute
+  AboutRoute: typeof AboutRoute
+  DashboardRoute: typeof DashboardRoute
+  HistoryRoute: typeof HistoryRoute
+  ApiPublicShortenRoute: typeof ApiPublicShortenRoute
+  ApiPublicUrlsRoute: typeof ApiPublicUrlsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$shortCode': {
+      id: '/$shortCode'
+      path: '/$shortCode'
+      fullPath: '/$shortCode'
+      preLoaderRoute: typeof ShortCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/shorten': {
+      id: '/api/public/shorten'
+      path: '/api/public/shorten'
+      fullPath: '/api/public/shorten'
+      preLoaderRoute: typeof ApiPublicShortenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/urls': {
+      id: '/api/public/urls'
+      path: '/api/public/urls'
+      fullPath: '/api/public/urls'
+      preLoaderRoute: typeof ApiPublicUrlsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShortCodeRoute: ShortCodeRoute,
+  AboutRoute: AboutRoute,
+  DashboardRoute: DashboardRoute,
+  HistoryRoute: HistoryRoute,
+  ApiPublicShortenRoute: ApiPublicShortenRoute,
+  ApiPublicUrlsRoute: ApiPublicUrlsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
