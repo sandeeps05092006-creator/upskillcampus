@@ -17,10 +17,9 @@ import {
 
 export function useOrigin() {
   const [origin, setOrigin] = useState("");
-  if (typeof window !== "undefined" && origin === "" && window.location.origin) {
-    // safe: derived from a stable browser value, set once during client render
-    queueMicrotask(() => setOrigin(window.location.origin));
-  }
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
   return origin;
 }
 
