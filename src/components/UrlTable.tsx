@@ -1,5 +1,5 @@
 import { Check, Copy, ExternalLink, Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { UrlRecord } from "@/lib/urls.functions";
 import { Button } from "@/components/ui/button";
