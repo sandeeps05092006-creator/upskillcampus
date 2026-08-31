@@ -105,6 +105,7 @@ function Home() {
               <div className="flex flex-1 items-center gap-2 px-2">
                 <Link2 className="h-5 w-5 shrink-0 text-muted-foreground" />
                 <Input
+                  ref={inputRef}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);
@@ -116,7 +117,19 @@ function Home() {
                   placeholder="https://example.com/my/very/long/link"
                   className="h-12 border-0 bg-transparent px-0 text-base shadow-none focus-visible:ring-0"
                 />
+                {value.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={clearInput}
+                    aria-label="Clear URL"
+                    title="Clear URL"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
               </div>
+
               <Button
                 type="submit"
                 size="lg"
