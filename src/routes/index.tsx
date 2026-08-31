@@ -71,7 +71,6 @@ function Home() {
     const check = validateLongUrl(value);
     if (!check.ok) {
       setError(check.error);
-      setResult(null);
       return;
     }
     setError(null);
