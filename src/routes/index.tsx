@@ -44,18 +44,27 @@ function Home() {
   const [result, setResult] = useState<UrlRecord | null>(null);
   const origin = useOrigin();
   const shorten = useServerFn(shortenUrl);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: (url: string) => shorten({ data: { url } }),
     onSuccess: (data) => {
       setResult(data);
       setError(null);
+      setValue("");
+      inputRef.current?.focus();
     },
     onError: (err: Error) => {
-      setResult(null);
       setError(err.message || "Something went wrong. Please try again.");
     },
   });
+
+  const clearInput = () => {
+    setValue("");
+    setError(null);
+    inputRef.current?.focus();
+  };
+
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
