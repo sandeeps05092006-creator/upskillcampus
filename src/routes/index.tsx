@@ -1,8 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, BarChart3, CheckCircle2, ExternalLink, Link2, Shield, Zap } from "lucide-react";
-import { useState } from "react";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  ExternalLink,
+  Link2,
+  Shield,
+  X,
+  Zap,
+} from "lucide-react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
