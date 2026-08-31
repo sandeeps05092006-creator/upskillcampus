@@ -1,8 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { ArrowRight, BarChart3, CheckCircle2, ExternalLink, Link2, Shield, Zap } from "lucide-react";
-import { useState } from "react";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  ExternalLink,
+  Link2,
+  Shield,
+  X,
+  Zap,
+} from "lucide-react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,25 +44,33 @@ function Home() {
   const [result, setResult] = useState<UrlRecord | null>(null);
   const origin = useOrigin();
   const shorten = useServerFn(shortenUrl);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const mutation = useMutation({
     mutationFn: (url: string) => shorten({ data: { url } }),
     onSuccess: (data) => {
       setResult(data);
       setError(null);
+      setValue("");
+      inputRef.current?.focus();
     },
     onError: (err: Error) => {
-      setResult(null);
       setError(err.message || "Something went wrong. Please try again.");
     },
   });
+
+  const clearInput = () => {
+    setValue("");
+    setError(null);
+    inputRef.current?.focus();
+  };
+
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const check = validateLongUrl(value);
     if (!check.ok) {
       setError(check.error);
-      setResult(null);
       return;
     }
     setError(null);
@@ -88,6 +105,7 @@ function Home() {
               <div className="flex flex-1 items-center gap-2 px-2">
                 <Link2 className="h-5 w-5 shrink-0 text-muted-foreground" />
                 <Input
+                  ref={inputRef}
                   value={value}
                   onChange={(e) => {
                     setValue(e.target.value);
@@ -99,7 +117,19 @@ function Home() {
                   placeholder="https://example.com/my/very/long/link"
                   className="h-12 border-0 bg-transparent px-0 text-base shadow-none focus-visible:ring-0"
                 />
+                {value.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={clearInput}
+                    aria-label="Clear URL"
+                    title="Clear URL"
+                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                )}
               </div>
+
               <Button
                 type="submit"
                 size="lg"
@@ -120,10 +150,22 @@ function Home() {
           {result && (
             <div className="mx-auto mt-8 w-full max-w-2xl animate-in fade-in slide-in-from-bottom-3 duration-500">
               <div className="rounded-2xl border border-primary/25 bg-card p-6 text-left shadow-[var(--shadow-card)]">
-                <p className="flex items-center gap-2 text-sm font-semibold text-primary">
-                  <CheckCircle2 className="h-4.5 w-4.5" />
-                  Success! Your short link is ready.
-                </p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-primary">
+                    <CheckCircle2 className="h-4.5 w-4.5" />
+                    Success! Your short link is ready.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setResult(null)}
+                    aria-label="Dismiss result"
+                    title="Dismiss result"
+                    className="-mr-1 -mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
 
                 <dl className="mt-5 space-y-4">
                   <div>
