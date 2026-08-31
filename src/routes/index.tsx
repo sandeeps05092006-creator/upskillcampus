@@ -150,10 +150,22 @@ function Home() {
           {result && (
             <div className="mx-auto mt-8 w-full max-w-2xl animate-in fade-in slide-in-from-bottom-3 duration-500">
               <div className="rounded-2xl border border-primary/25 bg-card p-6 text-left shadow-[var(--shadow-card)]">
-                <p className="flex items-center gap-2 text-sm font-semibold text-primary">
-                  <CheckCircle2 className="h-4.5 w-4.5" />
-                  Success! Your short link is ready.
-                </p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-primary">
+                    <CheckCircle2 className="h-4.5 w-4.5" />
+                    Success! Your short link is ready.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setResult(null)}
+                    aria-label="Dismiss result"
+                    title="Dismiss result"
+                    className="-mr-1 -mt-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+
 
                 <dl className="mt-5 space-y-4">
                   <div>
